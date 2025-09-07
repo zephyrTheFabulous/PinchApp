@@ -33,6 +33,27 @@ struct ContentView: View {
       }
   }
 
+  var magnification: some Gesture {
+    MagnificationGesture()
+      .onChanged { value in
+        withAnimation(.linear(duration: 1)) {
+          if imageScale >= 1 && imageScale <= 5 {
+            imageScale = value
+          } else if imageScale > 5 {
+            imageScale = 5
+          }
+        }
+      }
+      .onEnded { _ in
+        if imageScale > 5 {
+          imageScale = 5
+        } else if imageScale <= 1 { // return back to 1
+          resetImageState()
+        }
+      }
+  }
+
+  //MARK: - BODY
     var body: some View {
       NavigationStack {
         ZStack {
@@ -57,8 +78,9 @@ struct ContentView: View {
               resetImageState()
             }
           }
-          //MARK: - Drag gesture
           .gesture(dragGesture)
+          .gesture(magnification)
+
           .animation(.linear(duration: 1), value: isAnimating)
         } // ZS
         .navigationTitle("Pinch & Zoom")
