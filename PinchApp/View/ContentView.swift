@@ -66,10 +66,42 @@ struct ContentView: View {
         .onAppear {
           isAnimating = true
         }
+        //MARK: - Info panel
         .overlay(alignment: .top) {
           InfoPanelView(scale: imageScale, offset: imageOffset)
             .padding(.horizontal, 16)
           .padding(.top, 30)
+        }
+        //MARK: - Control panel
+        .overlay(alignment: .bottom) {
+          Group {
+            HStack {
+              // Scale down
+              Button {
+
+              } label: {
+                ControlImageView(icon: "minus.magnifyingglass")
+              }
+              // Reset
+              Button {
+
+              } label: {
+                ControlImageView(icon: "arrow.up.left.and.down.right.magnifyingglass")
+              }
+              // Scale up
+              Button {
+
+              } label: {
+                ControlImageView(icon: "plus.magnifyingglass")
+              }
+            } //: HS
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
+            .background(.ultraThinMaterial)
+            .clipShape(.rect(cornerRadius: 12))
+            .opacity(isAnimating ? 1:0)
+          }
+          .padding(.bottom, 30)
         }
       } //: NAV
     }
