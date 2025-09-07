@@ -141,6 +141,25 @@ struct ContentView: View {
           }
           .padding(.bottom, 30)
         }
+        //MARK: - Drawer menu
+        .overlay(alignment: .topTrailing) {
+          HStack (spacing: 12) {
+            // Handle
+            Image(systemName: "chevron.compact.left")
+              .resizable()
+              .scaledToFit()
+              .frame(height: 8)
+
+            // Thumbnails
+            Spacer()
+          }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 16)
+        .background(.ultraThinMaterial)
+        .clipShape(.rect(cornerRadius: 12))
+        .frame(width: 260)
+        .padding(.top, UIScreen.main.bounds.height / 12)
+        }
       } //: NAV
     }
 }
