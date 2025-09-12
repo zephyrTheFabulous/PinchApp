@@ -13,11 +13,18 @@ struct ContentView: View {
   @State private var imageOffset: CGSize = .zero
   @State private var isDrawerOpen = false // slide drawer out
 
+  let pages: [Page] = pagesData
+  @State private var pageIndex: Int = 1
+
   func resetImageState() {
     withAnimation(.spring()) {
       imageScale = 1
       imageOffset = .zero
     }
+  }
+
+  func currentPage() -> String {
+    pages[pageIndex - 1].imageName
   }
 
   var dragGesture: some Gesture {
@@ -60,7 +67,7 @@ struct ContentView: View {
         ZStack {
           Color.clear
 
-          Image("magazine-front-cover")
+          Image(currentPage())
             .resizable()
             .scaledToFit()
           .clipShape(.rect(cornerRadius: 10))
