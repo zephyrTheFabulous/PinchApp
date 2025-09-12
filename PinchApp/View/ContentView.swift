@@ -166,6 +166,21 @@ struct ContentView: View {
               }
 
             // Thumbnails
+            ForEach(pages) { item in
+              Image(item.thumbnailName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 80)
+                .clipShape(.rect(cornerRadius: 8))
+                .shadow(radius: 4)
+                .opacity(isDrawerOpen ? 1:0)
+                .animation(.easeOut(duration: 0.5), value: isDrawerOpen)
+                .onTapGesture {
+                  isAnimating = true
+                  pageIndex = item.id
+                }
+            }
+
             Spacer()
           }
         .padding(.horizontal, 8)
