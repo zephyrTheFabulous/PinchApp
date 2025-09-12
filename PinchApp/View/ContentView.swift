@@ -11,6 +11,7 @@ struct ContentView: View {
   @State private var isAnimating = false
   @State private var imageScale: CGFloat = 1
   @State private var imageOffset: CGSize = .zero
+  @State private var isDrawerOpen = false // slide drawer out
 
   func resetImageState() {
     withAnimation(.spring()) {
@@ -145,10 +146,17 @@ struct ContentView: View {
         .overlay(alignment: .topTrailing) {
           HStack (spacing: 12) {
             // Handle
-            Image(systemName: "chevron.compact.left")
+            Image(systemName: isDrawerOpen ? "chevron.compact.right" : "chevron.compact.left")
               .resizable()
               .scaledToFit()
-              .frame(height: 8)
+              .frame(height: 40)
+              .padding(8)
+              .foregroundStyle(.secondary)
+              .onTapGesture {
+                withAnimation(.easeOut) {
+                  isDrawerOpen.toggle()
+                }
+              }
 
             // Thumbnails
             Spacer()
@@ -157,8 +165,10 @@ struct ContentView: View {
         .padding(.vertical, 16)
         .background(.ultraThinMaterial)
         .clipShape(.rect(cornerRadius: 12))
+        .opacity(isAnimating ? 1:0)
         .frame(width: 260)
-        .padding(.top, UIScreen.main.bounds.height / 12)
+        .padding(.top, UIScreen.main.bounds.height / 12) // distance from top of the screen no matter the size of it
+        .offset(x: isDrawerOpen ? 20:215)
         }
       } //: NAV
     }
